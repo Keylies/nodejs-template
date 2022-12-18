@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "target": "es2020",
+    "sourceMap": true
+  },
+  "exclude": ["dist"],
+  "include": ["./app/**/*"]
+}
