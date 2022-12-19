@@ -4,3 +4,4 @@
 - Express
 - Environment file
 - JWT auth
+- File upload with Multer

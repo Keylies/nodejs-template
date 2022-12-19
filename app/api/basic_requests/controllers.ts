@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import Joi from "joi";
 import { genericResponse } from "../../services/response.service";
 import { IRequestValidationData, validateRequestData } from "../common.controllers";
+import multer from 'multer';
+import { storage } from '../../services/storage.service';
 
 // GET /requests
 
@@ -64,5 +66,23 @@ export const postWithRouteParamsAndBody: RequestHandler[] = [
     validateRequestData(postWithRouteParamsAndBodySchema),
     async (req, res, next) => {
         genericResponse.success.send(res, {message: `POST request with params 'id': ${req.params.id} and body: ${JSON.stringify(req.body)}`});
+    }
+]
+
+// POST /upload
+
+export const postWithFileUpload: RequestHandler[] = [
+    async (req, res, next) => {
+        const upload = multer({storage: storage}).single('file')
+
+        upload(req, res, err => {
+            if (typeof req.file === 'undefined')
+                return genericResponse.internalServerError.send(res, {error: 'File missing'});
+
+            if (err)
+                return genericResponse.internalServerError.send(res, {error: err});
+
+            return genericResponse.success.send(res, {message: `File ${req.file.originalname} is uploaded`});
+        });
     }
 ]
