@@ -4,8 +4,8 @@ import DB from '../services/database.service';
 export interface User {
     _id: ObjectId,
     username: string,
-    accessToken: string,
     password: string,
+    accessToken: string,
     created: Date,
     updated: Date
 };

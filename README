@@ -5,3 +5,4 @@
 - Environment file
 - JWT auth
 - File upload with Multer
+- Swagger UI

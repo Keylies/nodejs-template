@@ -18,7 +18,7 @@ export const signUp: RequestHandler[] = [
     async (req, res, next) => {
         try {
             const user = await userService.create(req.body.username, req.body.password);
-            userResponse.created.send(res, {user: user});
+            userResponse.created.send(res, user);
         } catch (error) {
             next(error);
         }
@@ -39,25 +39,10 @@ export const signIn: RequestHandler[] = [
     async (req, res, next) => {
         try {
             const user = await userService.authenticate(req.body.username, req.body.password)
-            genericResponse.success.send(res, {user: user})
+            genericResponse.success.send(res, user)
         } catch (error) {
             next(error);
         }
-    }
-]
-
-// POST /auth/sign-out
-
-const signOutSchema: IRequestValidationData = {
-    params: Joi.object({
-        id: Joi.number().required(),
-    }),
-};
-
-export const signOut: RequestHandler[] = [
-    validateRequestData(signOutSchema),
-    async (req, res, next) => {
-        res.send( `DELETE request with params 'id': ${req.params.id}`);
     }
 ]
 
@@ -78,17 +63,7 @@ export const refreshToken: RequestHandler[] = [
 
 // GET /auth/test
 
-// const testSchema: IRequestValidationData = {
-//     params: Joi.object({
-//         id: Joi.number().required(),
-//     }),
-//     body: Joi.object({
-//         name: Joi.string().required(),
-//     }),
-// };
-
 export const test: RequestHandler[] = [
-    // validateRequestData(testSchema),
     async (req, res, next) => {
         genericResponse.success.send(res, {message: 'Authorized'})
     }

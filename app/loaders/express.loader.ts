@@ -2,6 +2,8 @@ import express from 'express';
 import { authRoutes } from '../api/auth/routes';
 import { requestsRoutes } from '../api/basic_requests/routes';
 import { genericResponse, otherResponse, ResponseError } from '../services/response.service';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 
 export default async (app: express.Express) => {
   // Parse requests of content-type - application/json
@@ -17,6 +19,7 @@ export default async (app: express.Express) => {
   // API
   app.use('/basic-requests', requestsRoutes)
   app.use('/auth', authRoutes)
+  app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.get('/', (req, res) => {
     res.send('Node.JS template')
